@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday</title>
+    <style>
+        /* General Reset */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        /* Flexbox Container for Centering the Title and Button */
+        .container {
+            text-align: center; /* Centers text inside */
+        }
+
+        /* Title Animation */
+        h1 {
+            font-size: 70px;
+            font-weight: bold;
+            color: #ff6347;
+            text-align: center;
+            animation: popInOut 2s ease-in-out infinite, rainbow 5s linear infinite, sparkle 1.5s step-start infinite;
+            text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.7);
+            font-family: 'Courier New', Courier, monospace; /* Add a more decorative font */
+        }
+
+        /* Rainbow Effect for Title */
+        @keyframes rainbow {
+            0% { color: #ff6347; }
+            14% { color: #ff1493; }
+            28% { color: #00bfff; }
+            42% { color: #32cd32; }
+            57% { color: #ff0; }
+            71% { color: #8a2be2; }
+            85% { color: #ff69b4; }
+            100% { color: #ff6347; }
+        }
+
+        /* Sparkling Stars */
+        @keyframes sparkle {
+            0% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.8); }
+            50% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.7), 0 0 15px rgba(255, 255, 255, 0.7); }
+            100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.8); }
+        }
+
+        /* Button Style */
+        .button {
+            background-color: #ff6347;
+            color: white;
+            padding: 15px 30px;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-top: 30px;
+            animation: buttonPop 1s ease-in-out infinite;
+        }
+
+        .button:hover {
+            background-color: #ff4500;
+            transform: scale(1.1);
+        }
+
+        /* Button Animation */
+        @keyframes buttonPop {
+            0% { transform: scale(0.9); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Popup and Video Styling */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .popup video {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .popup-close {
+            background-color: #ff6347;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .popup-close:hover {
+            background-color: #ff4500;
+        }
+
+        /* Overlay behind Popup */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        /* Footer Style */
+        footer {
+            position: fixed;
+            bottom: 10px;
+            text-align: center;
+            width: 100%;
+            font-size: 18px;
+            color: #ff6347;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .credit {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ff1493;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Animated Pointer */
+        .pointer {
+            display: inline-block;
+            font-size: 50px;
+            animation: pointerAnim 1s infinite;
+        }
+
+        @keyframes pointerAnim {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Happy Birthday</h1>
+        <button class="button" onclick="openPopup()">Click Me</button>
+    </div>
+
+    <!-- Popup Video -->
+    <div class="popup-overlay" id="popup-overlay"></div>
+    <div class="popup" id="popup">
+        <video id="popup-video" controls autoplay muted>
+            <source src="video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <button class="popup-close" onclick="closePopup()">Close</button>
+    </div>
+
+    <!-- Footer with Credit and Animated Pointer -->
+    <footer>
+        <span>Credit by </span>
+        <a href="video-page.html" class="credit" target="_blank">Yen</a>
+        <span> and </span>
+        <a href="https://openai.com/chatgpt" class="credit" target="_blank">ChatGPT</a>
+        <span class="pointer">👈</span>
+    </footer>
+
+    <script>
+        function openPopup() {
+            // Show the popup
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('popup-overlay').style.display = 'block';
+
+            // Play the video automatically
+            var video = document.getElementById('popup-video');
+            video.play();
+        }
+
+        function closePopup() {
+            // Hide the popup
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('popup-overlay').style.display = 'none';
+
+            // Stop and reset the video when closed
+            var video = document.getElementById('popup-video');
+            video.pause();
+            video.currentTime = 0;
+        }
+    </script>
+
+</body>
